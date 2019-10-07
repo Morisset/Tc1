@@ -1,0 +1,99 @@
+////////////////////////////////////
+title tc1_LCO4
+////////////////////////////////////
+set punch prefix "tc1_LCO4"
+Blackbody 30000.000000
+Q(H) = 47.050
+radius = 16.000
+hden = 3.398
+filling factor = 1.000000
+element abundance helium -0.980
+element abundance carbon -3.250
+element abundance nitrogen -4.250
+element abundance oxygen -3.600
+element abundance neon -4.400
+element abundance magnesium -5.100
+element abundance silicon -6.100
+element abundance sulphur -5.650
+element abundance chlorine -7.100
+element abundance argon -6.000
+element abundance iron -6.400
+grains "graphite_myism_00005_1500_35_10.opc" 1.2
+distance = 2200.0 parsecs linear
+print last
+Save lines, intensity, column, emergent, ".lines"
+iterate
+sphere
+save last radius ".rad"
+save last continuum ".cont"
+save last physical conditions ".phy"
+save last overview ".ovr"
+save last heating ".heat"
+save last cooling ".cool"
+save last optical depth ".opd"
+save last grain temperature ".gtemp"
+save last grain abundances ".gabund"
+save last grain D/G ratio ".gdgrat"
+save last element hydrogen ".ele_H"
+save last element helium ".ele_He"
+save last element carbon ".ele_C"
+save last element nitrogen ".ele_N"
+save last element oxygen ".ele_O"
+save last element argon ".ele_Ar"
+save last element neon ".ele_Ne"
+save last element sulphur ".ele_S"
+save last element chlorin ".ele_Cl"
+save last element iron ".ele_Fe"
+save last element silicon ".ele_Si"
+save last lines emissivity ".emis"
+H  1 4861.33A
+H  1 6562.81A
+H  1 4340.94A
+He 1 5875.64A
+He 1 4471.49A
+N  2 6583.45A
+O  1 6300.30A
+BLND 4363.00A
+O  3 5006.84A
+Ne 3 3868.76A
+BLND 5199.00A
+O  2 3728.81A
+O  2 3726.03A
+BLND 7323.00A
+Mg 1 4562.60A
+S  3 6312.06A
+Ar 3 5191.82A
+S  2 6730.82A
+S  2 6716.44A
+S  2 4076.35A
+S  2 4068.60A
+Fe 3 4658.01A
+Fe 3 5270.40A
+Fe 3 4701.62A
+BLND 5755.00A
+BLND 7332.00A
+Ar 3 7135.79A
+Ar 3 7751.11A
+Ne 3 3967.47A
+BLND 1909.00A
+BLND 2326.00A
+Cl 3 5517.71A
+Cl 3 5537.87A
+Ar 2 6.98337m
+Ar 3 8.98898m
+Ar 3 21.8253m
+S  4 10.5076m
+Ne 2 12.8101m
+Ne 3 15.5509m
+S  3 18.7078m
+S  3 33.4704m
+Ca B 12.3684m
+Ca B 12.3837m
+BLND 3726.00A
+BLND 3729.00A
+Ca B 5875.64A
+S  3 9068.62A
+Ca B 4471.49A
+Ca B 6.94480m
+Ca B 7.09071m
+end of lines
