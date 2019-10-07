@@ -1,6 +1,6 @@
 #===============================================================
-# "pyCloudy" for Tc 1 --> uses Cloudy
-# Ago 2018
+# This is the script used for the Aleman et al. 2019 paper on PN Tc 1
+# See at the end of this file the commented part to know how to run it.
 #===============================================================
 
 import numpy as np
@@ -14,62 +14,6 @@ from pyneb.utils.misc import int_to_roman
 pc.config.cloudy_exe = '/usr/local/Cloudy/c17.01/source/cloudy.exe'
 dir_ = './outputs/'
 
-#%%
-
-def make_obs_tab():
-    lines = np.genfromtxt('lines.dat', delimiter='&', dtype=None, names='ID, lam1, lam2, f, t')
-    RC = pn.RedCorr(cHbeta=0.4, R_V=3.1, law='CCM89')
-    with open('new_lines.dat', 'w') as f:
-        for l in lines:
-            towrite = '{} & {:.2f} & {:.2f} & {:5.3f} & {:5.3f} & {}\n'.format(l['ID'], l['lam1'], l['lam2']*1.00029,
-                    l['f'], l['f']*RC.getCorrHb(l['lam1']), l['t'])
-            towrite = towrite.replace('b\'', '')
-            towrite = towrite.replace('\\\\', '\\')
-            towrite = towrite.replace('\\t\\t', '')
-            towrite = towrite.replace('\\t(', '(')
-            towrite = towrite.replace('\\t\\', '\\')
-            towrite = towrite.replace('\\t', '**')
-            towrite = towrite.replace('**ex', '\\tex')
-            towrite = towrite.replace('**', '')
-            towrite = towrite.replace('\\\\\\\\', '\\')
-            towrite = towrite.replace('\'', ' ')
-            f.write(towrite)
-        
-#%%
-
-def trans_emis_label(label):
-    trans_dic = {}
-    trans_dic['BLND 5199.00A'] = 'N  1 5199.00A'
-    trans_dic['BLND 4363.00A'] = 'O  3 4363.00A'
-    trans_dic['BLND 7323.00A'] = 'O  2 7323.00A'
-    trans_dic['BLND 5755.00A'] = 'N  2 5755.00A'
-    trans_dic['BLND 7332.00A'] = 'O  2 7332.00A'
-    trans_dic['BLND 1909.00A'] = 'C  3 1909.00A'
-    trans_dic['BLND 2326.00A'] = 'C  2 2326.00A'
-    trans_dic['BLND 3726.00A'] = 'O  2 3726.00A'
-    trans_dic['BLND 3729.00A'] = 'O  2 3729.00A'
-    trans_dic['Ca B 5875.64A'] = 'He 1 5875.64A'
-    if label in trans_dic:
-        new_label = trans_dic[label]
-    else:
-        new_label = label
-    elem, ion, wlstr = new_label.split()
-    if ion == 'B':
-        ion = '1'
-        elem = 'H'
-    wlr = wlstr[-1]
-    wl = float(wlstr[:-1])
-    if elem in ('H', 'He'):
-        if wlr == 'A':
-            out_label = '~{}{} {:.0f}\AA'.format(elem, int_to_roman(int(ion)), wl)
-        elif wlr == 'm':
-            out_label = '~{}{} {:.2f}$\mu$m'.format(elem, int_to_roman(int(ion)), wl)
-    else:
-        if wlr == 'A':
-            out_label = '~[{}{}] {:.0f}\AA'.format(elem, int_to_roman(int(ion)), wl) 
-        elif wlr == 'm':
-            out_label = '~[{}{}] {:.2f}$\mu$m'.format(elem, int_to_roman(int(ion)), wl) 
-    return out_label
 #%%
 class Model(object):
     
@@ -873,6 +817,62 @@ def make_mod_LCO4():
     M.abund['Si'] = -6.1
     M.distance = 2.2
     return M    
+#%%
+
+def make_obs_tab():
+    lines = np.genfromtxt('lines.dat', delimiter='&', dtype=None, names='ID, lam1, lam2, f, t')
+    RC = pn.RedCorr(cHbeta=0.4, R_V=3.1, law='CCM89')
+    with open('new_lines.dat', 'w') as f:
+        for l in lines:
+            towrite = '{} & {:.2f} & {:.2f} & {:5.3f} & {:5.3f} & {}\n'.format(l['ID'], l['lam1'], l['lam2']*1.00029,
+                    l['f'], l['f']*RC.getCorrHb(l['lam1']), l['t'])
+            towrite = towrite.replace('b\'', '')
+            towrite = towrite.replace('\\\\', '\\')
+            towrite = towrite.replace('\\t\\t', '')
+            towrite = towrite.replace('\\t(', '(')
+            towrite = towrite.replace('\\t\\', '\\')
+            towrite = towrite.replace('\\t', '**')
+            towrite = towrite.replace('**ex', '\\tex')
+            towrite = towrite.replace('**', '')
+            towrite = towrite.replace('\\\\\\\\', '\\')
+            towrite = towrite.replace('\'', ' ')
+            f.write(towrite)
+        
+#%%
+
+def trans_emis_label(label):
+    trans_dic = {}
+    trans_dic['BLND 5199.00A'] = 'N  1 5199.00A'
+    trans_dic['BLND 4363.00A'] = 'O  3 4363.00A'
+    trans_dic['BLND 7323.00A'] = 'O  2 7323.00A'
+    trans_dic['BLND 5755.00A'] = 'N  2 5755.00A'
+    trans_dic['BLND 7332.00A'] = 'O  2 7332.00A'
+    trans_dic['BLND 1909.00A'] = 'C  3 1909.00A'
+    trans_dic['BLND 2326.00A'] = 'C  2 2326.00A'
+    trans_dic['BLND 3726.00A'] = 'O  2 3726.00A'
+    trans_dic['BLND 3729.00A'] = 'O  2 3729.00A'
+    trans_dic['Ca B 5875.64A'] = 'He 1 5875.64A'
+    if label in trans_dic:
+        new_label = trans_dic[label]
+    else:
+        new_label = label
+    elem, ion, wlstr = new_label.split()
+    if ion == 'B':
+        ion = '1'
+        elem = 'H'
+    wlr = wlstr[-1]
+    wl = float(wlstr[:-1])
+    if elem in ('H', 'He'):
+        if wlr == 'A':
+            out_label = '~{}{} {:.0f}\AA'.format(elem, int_to_roman(int(ion)), wl)
+        elif wlr == 'm':
+            out_label = '~{}{} {:.2f}$\mu$m'.format(elem, int_to_roman(int(ion)), wl)
+    else:
+        if wlr == 'A':
+            out_label = '~[{}{}] {:.0f}\AA'.format(elem, int_to_roman(int(ion)), wl) 
+        elif wlr == 'm':
+            out_label = '~[{}{}] {:.2f}$\mu$m'.format(elem, int_to_roman(int(ion)), wl) 
+    return out_label
 
 #%%
 def make_tab_params(MLCO_name='tc1_LCO4', DLCO=2.2, 
@@ -962,7 +962,8 @@ def make_tab_params(MLCO_name='tc1_LCO4', DLCO=2.2,
     print(str2write)
     with open(outfile, 'w') as f:
         f.write(str2write)
-   
+        
+        
 def make_tab_lines(MLCO_name='tc1_LCO4', DLCO=2.2, 
              MXS_name='tc1_XS2', DXS=2.1, 
              outfile='tab_lines.tex'):
@@ -1037,92 +1038,41 @@ def computeHb():
     print(Ibeta)
     
 #%%
-#make_tab_params()
-#make_tab_lines()
 #%%
 
 #===============================================================
 ########################## user input ##########################
 #===============================================================
+# Comment out what is needed in the following:
 """
 print('Starting!')
+
+MXS2 = make_mod_XS2()
+MXS2.call_pyCloudy()
+MXS2.read_model(HeI_cut=None, cube_size=50, verbose=False, r_out_cut = MXS2.cm(6.))
+MXS2.make_3D(100, doplot=False, verbose=False)
+MXS2.print_res() 
+
 MKP4 = make_mod_LCO4()
-#MKP4.call_pyCloudy()
+MKP4.call_pyCloudy()
 MKP4.read_model(HeI_cut=None, cube_size=50, verbose=False, r_out_cut = MKP4.cm(6.))
 MKP4.make_3D(100, doplot=False, verbose=False)
 MKP4.print_res() 
 
-#%%
-MXS2 = make_mod_XS2()
-#MXS2.call_pyCloudy()
-MXS2.read_model(HeI_cut=None, cube_size=50, verbose=False, r_out_cut = MXS2.cm(6.))
-MXS2.make_3D(100, doplot=False, verbose=False)
-MXS2.print_res() 
-"""
-#%%
-"""
-M = Model('tc1_XS3', instrument='XShooter', SED='BB', use_slit=True)
-M.densi = np.log10(2500)
-M.dust_type = 'graphite_myism_00005_1500_35_10.opc'
-M.dust = 1.3
-M.ff = 0.2
-M.Temp = 32000.
-M.luminosity_unit = 'Q(H)'
-M.luminosity= 46.85#    np.log10(5000.0*3.826e33)
-M.inner_radius = np.log10(1e16)
-M.abund['He'] = -0.98 
-M.abund['C']  = -3.1  
-M.abund['N']  = -4.25 
-M.abund['O']  = -3.25
-M.abund['Ne'] = -4.4
-M.abund['Cl'] = -6.95
-M.abund['Ar'] = -5.6
-M.abund['S']  = -5.8
-M.abund['Mg'] = -5.3
-M.abund['Fe'] = -6.4
-M.abund['Si'] = -6.1
-#M.search_sol(HeI_cut=None)
+make_tab_params()
+make_tab_lines()
 
-#%%#===============================================================
-########################## run the model #######################
-#===============================================================
-#M.call_pyCloudy()
+plot_all_profiles(MXS2)
 
-#%%
-#===============================================================
-########################## read 1D model #######################
-#===============================================================
-M.distance = 2.1
-#M.read_model(HeI_cut=-20, cube_size=50, verbose=False)
-M.read_model(HeI_cut=-30, cube_size=50, verbose=False, r_out_cut = M.cm(6))
-#===============================================================
-########################## compute 3D model ####################
-#===============================================================
-M.make_3D(100, doplot=False, verbose=False, no_VIS=False)
-#%%
-print_res(M) # also possible with M.print_res()
-plot_dust(M)
-#plot_all_profiles(M)
-#%%
-"""
-"""
-c_sizes = [30, 50, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200]
-difs = []
-for c_size in c_sizes:
-    M.make_3D(c_size)
-    difs.append(M.difs.copy())
-difs = np.array(difs)
+plot_9slits()
 
-f, ax = plt.subplots()
-for i in range(difs.shape[1]):
-    ax.plot(c_sizes, difs[:,i])
+plot_dust(MXS2)   
+
 """
 
-        
 #%%
 #===============================================================
 # All finished!    
-print('\a')
 print('=================================')
 print('Done!')
 #===============================================================
