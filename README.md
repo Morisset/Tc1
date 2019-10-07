@@ -1,2 +1,7 @@
 # Tc1
 Tools for the model of PN Tc 1
+
+
+Paper here: https://ui.adsabs.harvard.edu/abs/2019MNRAS.tmp.2280A/abstract
+
+We present a detailed analysis of deep VLT/X-Shooter observations of the planetary nebula Tc 1. We calculate gas temperature, density, extinction, and abundances for several species from the empirical analysis of the total line fluxes. In addition, a spatially resolved analysis of the most intense lines provides the distribution of such quantities across the nebula. The new data reveal that several lines exhibit a double peak spectral profile consistent with the blue- and red-shifted components of an expanding spherical shell. The study of such components allowed us to construct for the first time a three-dimensional morphological model, which reveals that Tc 1 is a slightly elongated spheroid with an equatorial density enhancement seen almost pole on. A few bright lines present extended wings (with velocities up to a few hundred km/s), but the mechanism producing them is not clear. We constructed photoionization models for the main shell of Tc 1. The models predict the central star temperature and luminosity, as well as the nebular density and abundances similar to previous studies. Our models indicate that Tc 1 is located at a distance of approximately 2 kpc. We report the first detection of the [Kr III] 6825 A emission line, from which we determine the Krypton abundance. Our model indicates that the main shell of Tc 1 is matter bounded; leaking H ionizing photons may explain the ionization of its faint AGB-remnant halo.
